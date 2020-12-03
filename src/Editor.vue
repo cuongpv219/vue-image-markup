@@ -55,7 +55,7 @@
         mounted() {
             this.canvas = new fabric.Canvas(this.editorId);
             this.canvas.setDimensions({width: this.canvasWidth, height: this.canvasHeight});
-            this.canvas.backgroundColor = "#fff";
+            this.canvas.backgroundColor = "rgba(0, 0, 0, 0)";
             let canvasProperties = {width: this.canvas.width, height: this.canvas.height}
             let currentCanvas = {json: this.canvas.toJSON(), canvas: canvasProperties};
             new CanvasHistory(this.canvas, currentCanvas);
