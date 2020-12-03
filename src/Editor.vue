@@ -542,7 +542,10 @@
                 this.canvas.add(this.circle);
 
                 this.canvas.renderAll();
-            }
+            },
+            changeEditorSize(width, height) {
+                this.canvas.setDimensions({width, height})
+            },
         }
 
     }
