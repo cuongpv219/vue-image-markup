@@ -52,6 +52,11 @@
             }
 
         },
+        watch: {
+            history() {
+                console.log('history change', this.history)
+            }
+        },
         mounted() {
             this.canvas = new fabric.Canvas(this.editorId);
             this.canvas.setDimensions({width: this.canvasWidth, height: this.canvasHeight});
@@ -415,7 +420,7 @@
                 }
                 this.drag();
                 this.history = new CanvasHistory();
-                if (this.history.length) {
+                if (this.history.length > 1) {
                     this.objects.push(this.history.pop())
                     if (this.history[this.history.length - 1]) {
                         if (this.history[this.history.length - 1].canvas) {
@@ -451,6 +456,8 @@
                         }
                         this.canvas.renderAll();
                     }
+                } else if (this.history.length == 1 ) {
+                    this.canvas.clear()
                 }
             },
             redo() {
@@ -545,6 +552,23 @@
             },
             changeEditorSize(width, height) {
                 this.canvas.setDimensions({width, height})
+            },
+            clearHistory() {
+                this.canvas.clear()
+                this.history = []
+                this.objects = []
+                new CanvasHistory(this.canvas, false, false, true);
+                // this.drawCircle({
+                //     left: 0,
+                //     top: 0,
+                //     radius: 0,
+                //     strokeWidth: 0,
+                //     stroke: 0,
+                //     fill: 'transparent',
+                //     borderColor: 'transparent',
+                //     noScaleCache:
+                // })
+                // this.canvas.renderAll();
             },
         }
 

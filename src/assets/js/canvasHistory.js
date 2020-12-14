@@ -1,36 +1,41 @@
-import {fabric} from "fabric";
+import { fabric } from "fabric";
 
 export default (function () {
 
     let history = [];
-    function CanvasHistory(canvas,cropObject = false,redoHistory = false) {
-        if(redoHistory){
-           if(redoHistory.backgroundImage){
-               delete redoHistory.backgroundImage
-             }  
+    function CanvasHistory(canvas, cropObject = false, redoHistory = false, clearHistory = false) {
+        if (redoHistory) {
+            if (redoHistory.backgroundImage) {
+                delete redoHistory.backgroundImage
+            }
             history.push(redoHistory)
         }
-        if(canvas){
-            this.canvas = canvas; 
-            let currentCanvas = this.canvas.toJSON();  
-            currentCanvas.objects.forEach(function(object) {
-                if(object.type == "lineArrow"){
+        if (clearHistory) {
+            console.log('------clear history!')
+            // history = history.slice(0, 1)
+            history = []
+        }
+        if (canvas) {
+            this.canvas = canvas;
+            let currentCanvas = this.canvas.toJSON();
+            currentCanvas.objects.forEach(function (object) {
+                if (object.type == "lineArrow") {
                     object.heads = [1, 0];
                 }
             });
-            let currentJson = {};  
-            
-            if(cropObject){
-                currentJson = Object.assign(currentJson,cropObject);
-                currentJson.json.objects.forEach(function(object) {
-                    if(object.type == "lineArrow"){
+            let currentJson = {};
+
+            if (cropObject) {
+                currentJson = Object.assign(currentJson, cropObject);
+                currentJson.json.objects.forEach(function (object) {
+                    if (object.type == "lineArrow") {
                         object.heads = [1, 0];
                     }
                 });
             }
-            history.push(currentJson);   
+            history.push(currentJson);
         }
-        return history;    
-    }; 
+        return history;
+    };
     return CanvasHistory;
 }());
